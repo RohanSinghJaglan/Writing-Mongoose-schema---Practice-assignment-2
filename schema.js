@@ -1,16 +1,13 @@
 const mongoose = require('mongoose');
 
-
-const comments = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    
   },
   message: {
     type: String,
     required: true,
-
   },
   commentedAt: {
     type: Date,
@@ -18,25 +15,21 @@ const comments = new mongoose.Schema({
   },
 });
 
-
-const blogposts = new mongoose.Schema({
+const blogPostSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
     unique: true,
     minlength: 5,
-   
   },
   content: {
     type: String,
     required: true,
     minlength: 50,
-  
   },
   author: {
     type: String,
     required: true,
-  
   },
   tags: {
     type: [String],
@@ -45,16 +38,14 @@ const blogposts = new mongoose.Schema({
   category: {
     type: String,
     default: 'General',
-  
   },
   likes: {
     type: [String],
     default: [],
   },
-  comments:{
-    type:[comments],
+  comments: {
+    type: [commentSchema],
     default: [],
-
   },
   createdAt: {
     type: Date,
@@ -64,12 +55,8 @@ const blogposts = new mongoose.Schema({
     type: Date,
     default: null,
   },
+}, {
+  timestamps: true, // Automatically adds 'createdAt' and 'updatedAt' fields
 });
 
-
-
-
-const BlogPosts = mongoose.model('BlogPosts', blogposts);
-
-
-module.exports = BlogPosts;
+module.exports = mongoose.model('BlogPost', blogPostSchema);
